@@ -1,0 +1,11 @@
+GET http://localhost:3000/api/categoria
+
+###
+
+POST http://localhost:3000/api/auth
+Content-Type: application/json
+
+{
+    "email": "luis@uv.mx",
+    "password": "patito"
+}

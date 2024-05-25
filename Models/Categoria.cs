@@ -8,7 +8,6 @@ public class Categoria{
     public bool Protegida { get; set; } = false;
 
     [JsonIgnore]
-
     public ICollection<Pelicula>? Peliculas { get; set; }
 
 }

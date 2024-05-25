@@ -1,5 +1,6 @@
 using backendnet.Data;
 using backendnet.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,11 @@ namespace backendnet.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PeliculasController(DataContext context) : Controller
+public class PeliculasController(IdentityContext context) : Controller
 {
     // GET: api/peliculas?s=titulo
     [HttpGet]
+    [Authorize(Roles = "Usuario,Administrador")]
     public async Task<ActionResult<IEnumerable<Pelicula>>> GetPeliculas(string? s)
     {
         if (string.IsNullOrEmpty(s))
@@ -21,6 +23,7 @@ public class PeliculasController(DataContext context) : Controller
 
     // GET: api/peliculas/5
     [HttpGet("{id}")]
+    [Authorize(Roles = "Usuario,Administrador")]
     public async Task<ActionResult<Pelicula>> GetPelicula(int id)
     {
         var pelicula = await context.Pelicula.Include(i => i.Categorias).AsNoTracking().FirstOrDefaultAsync(s => s.PeliculaId == id);
@@ -31,6 +34,7 @@ public class PeliculasController(DataContext context) : Controller
 
     // POST: api/peliculas
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<Pelicula>> PostPelicula(PeliculaDTO peliculaDTO)
     {
         Pelicula pelicula = new()
@@ -50,6 +54,7 @@ public class PeliculasController(DataContext context) : Controller
 
     // PUT: api/peliculas/5
     [HttpPut("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> PutPelicula(int id, PeliculaDTO peliculaDTO)
     {
         if (id != peliculaDTO.PeliculaId) return BadRequest();
@@ -68,6 +73,7 @@ public class PeliculasController(DataContext context) : Controller
 
     // DELETE: api/peliculas/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> DeletePelicula(int id)
     {
         var pelicula = await context.Pelicula.FindAsync(id);

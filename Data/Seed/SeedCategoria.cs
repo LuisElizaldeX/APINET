@@ -1,7 +1,8 @@
+using backendnet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace backendnet.Models.Data.Seed;
+namespace backendnet.Data.Seed;
 
 public class SeedCategoria : IEntityTypeConfiguration<Categoria>
 {
